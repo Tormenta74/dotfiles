@@ -1,17 +1,18 @@
+# Termite config file by Tormenta <diego.sainzdemedrano@gmail.com>
 # Linux Colors
 
 [options]
 font = Inconsolata Regular 12
 clickable_url = true
 cursor_shape = underline
-browser = firefox
+browser = chromium
 
 [colors]
 background = rgba(0, 0, 0, 0.90)
 foreground = rgba(237, 237, 237, 1)
 
 # special
-cursor          = #ffffff
+cursor  = #ffffff
 
 # # black
 color0  = #000000

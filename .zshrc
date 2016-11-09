@@ -1,7 +1,11 @@
+# Some preferences.
+
 export TERM="xterm-256color"
 export VISUAL=vim
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL"
+
+# Quick fix to work with gems in Arch systems.
 
 GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
 GEM_PATH=$GEM_HOME
@@ -22,6 +26,10 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+#
+## Lines added manually by me.
+#
+
 # bindkeys for my weird terminals
 
 bindkey '^[[1;5C' forward-word      # [Ctrl-RightArrow] - move forward one word
@@ -33,11 +41,11 @@ bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[[Z' reverse-menu-complete
 
-source ~/.profile
+source ~/.profile   # Some env variable stuff I'm not sure I need, but ok.
 
 source  ~/zsh-themes/powerlevel9k/powerlevel9k.zsh-theme
-#source  ~/zsh-themes/lambda-mod-zsh-theme/lambda-mod.zsh-theme
-#source /usr/share/oh-my-zsh/zshrc
+#source  ~/zsh-themes/lambda-mod-zsh-theme/lambda-mod.zsh-theme     # Never got this to work with git dirs. Maybe in the future I will work in my own theme.
+#source /usr/share/oh-my-zsh/zshrc      # Tried it. Never gonna use it again.
 
 # classic fancy aliases
 

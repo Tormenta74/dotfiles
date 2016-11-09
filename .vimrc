@@ -1,4 +1,5 @@
 " An example for a vimrc file.
+" Modified by Tormenta <diego.sainzdemedrano@gmail.com>
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
 " Last change:	2015 Mar 24
@@ -31,8 +32,8 @@ set directory=/var/tmp//
 set backupdir=/var/tmp//
 set undodir=/var/tmp//
 set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
+set ruler		    " show the cursor position all the time
+set showcmd		    " display incomplete commands
 set incsearch		" do incremental searching
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
