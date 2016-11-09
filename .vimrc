@@ -1,0 +1,1 @@
+/home/tormenta/.vimrc
