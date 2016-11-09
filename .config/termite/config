@@ -1,1 +1,47 @@
-/home/tormenta/.config/termite/config
+# Linux Colors
+
+[options]
+font = Inconsolata Regular 12
+clickable_url = true
+cursor_shape = underline
+browser = firefox
+
+[colors]
+background = rgba(0, 0, 0, 0.90)
+foreground = rgba(237, 237, 237, 1)
+
+# special
+cursor          = #ffffff
+
+# # black
+color0  = #000000
+color8  = #4d4d4d
+
+# # red
+color1  = #ff0f00
+color9  = #af0f00
+
+# # green
+color2  = #09cb00
+color10 = #23fd00
+
+# # yellow
+color2  = #cecb00
+color11 = #fffd00
+
+# # blue
+color4  = #001cd1
+color12 = #0026ff
+
+# # magenta
+color5  = #cb1ed1
+color13 = #fd28ff
+
+# # cyan
+color6  = #0dcdcd
+color14 = #14ffff
+
+# # white
+color7  = #e5e5e5
+color15 = #ffffff
+
