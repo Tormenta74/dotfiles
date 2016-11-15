@@ -1,21 +1,9 @@
-# Some preferences.
-
-export TERM="xterm-256color"
-export VISUAL=vim
-export EDITOR="$VISUAL"
-export GIT_EDITOR="$VISUAL"
-
-# Quick fix to work with gems in Arch systems.
-
-GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
-GEM_PATH=$GEM_HOME
-export PATH=$PATH:$GEM_HOME/bin
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
+HISTSIZE=1000
 SAVEHIST=1000
-setopt autocd
+#setopt autocd
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
@@ -41,11 +29,12 @@ bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[[Z' reverse-menu-complete
 
-source ~/.profile   # Some env variable stuff I'm not sure I need, but ok.
 
-source  ~/zsh-themes/powerlevel9k/powerlevel9k.zsh-theme
+source  $HOME/zsh-themes/powerlevel9k/powerlevel9k.zsh-theme
 #source  ~/zsh-themes/lambda-mod-zsh-theme/lambda-mod.zsh-theme     # Never got this to work with git dirs. Maybe in the future I will work in my own theme.
-#source /usr/share/oh-my-zsh/zshrc      # Tried it. Never gonna use it again.
+
+source $HOME/.env
+# source $HOME/.functions
 
 # classic fancy aliases
 
@@ -89,13 +78,28 @@ alias yao="yaourt"
 
 alias susp="systemctl suspend"
 
+alias vimrc="vim $HOME/.vimrc"
+alias zshrc="vim $HOME/.zshrc"
+
+# stop hitting the goddamn ñ key
+
+alias lñ="echo 'LEÑE!'"
+
+# exotic stuff
+
+alias stopeclim="$ECLIPSE_HOME/eclim -command shutdown"
+
 # danger zone
 
 alias yolo="yaourt -Syyuua --noconfirm --devel"
 
+
 ##
 ## my custom functions
 ##
+
+# just checks a directory/file's size every 2 seconds
+# useful for monitoring big downloads or cp/mv operations
 
 monitor () {
     if [[ $# == 0 ]]; then
@@ -104,6 +108,27 @@ monitor () {
         watch -n 2 ls -lah $1
     fi
 }
+
+# idiot-proof version of mv: checks that you have the rights to perform
+# the operation before you start doing it
+
+idiot_mv () {
+    if [[ $# -le 1 ]]; then
+        mv $@    # let mv tell you what you did wrong
+    else
+        # we want the owner of the destination directory, not the destination file (cuz it may not even exist yet and even then it don't matter, mv will ask you before rewriting)
+        [[ !( -f $2 ) ]] && owner_dst_dir=$(stat -c "%U" $2)
+        [[ -f $2 ]] && owner_dst_dir=$(echo "$2" | rev | cut -d/ -f2- | rev | stat -c "%U" -) 
+        me=$(whoami)
+        if [[ me =! owner_dst_dir ]]; then
+            echo -e "cannot move \'$1\' to  \'$2\': you are not the owner of the destination directory"
+        else
+            mv $@
+        fi
+    fi
+}
+
+
 
 # makes dated archives of directories passed as arguments
 
@@ -160,5 +185,15 @@ start () {
     fi
 }
 
+#
+## This didn't work:
+# alias eclimd="bash -c \"$ECLIPSE_HOME/eclimd &> $ECLIM_LOGS/eclim.$(date +%Y-%m-%d-%H%M%S).log\""
+#
+## So I tried this:
+#
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+eclimd () {
+    fecha=$(date +%Y-%m-%d-%H%M%S)
+    bash -c "$ECLIPSE_HOME/eclimd &> $ECLIM_LOGS/eclim.$(date +%Y-%m-%d-%H%M%S).log"
+}
+
