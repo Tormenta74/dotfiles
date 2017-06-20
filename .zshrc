@@ -1,18 +1,38 @@
+# Needed by stjerm
 
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd
-bindkey -e
-# End of lines configured by zsh-newuser-install
+export TERM="xterm-256color"
+
+# Generated prompt (by promptline.vim)
+#source $HOME/zsh/zsh-airline-prompt/prompt.sh
+
+# 9k
+
+POWERLEVEL9K_MODE="awesome-fontconfig"
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history battery time)
+POWERLEVEL9K_BATTERY_ICON=" "
+POWERLEVEL9K_HOME_ICON=" "
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M   %d.%m.%y}"
+source $HOME/zsh/powerlevel9k/powerlevel9k.zsh-theme
 
 # The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete _ignored
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
 zstyle :compinstall filename '/home/tormenta/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+# End of lines configured by zsh-newuser-install
+
+#autoload -Uz promptinit
+#promptinit
+#prompt fire red yellow red white white white
 
 #
 ## Lines added manually by me.
@@ -28,10 +48,6 @@ bindkey '^[OF' end-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[[Z' reverse-menu-complete
-
-
-source  $HOME/zsh-themes/powerlevel9k/powerlevel9k.zsh-theme
-#source  ~/zsh-themes/lambda-mod-zsh-theme/lambda-mod.zsh-theme     # Never got this to work with git dirs. Maybe in the future I will work in my own theme.
 
 source $HOME/.env
 source $HOME/.functions
@@ -71,28 +87,30 @@ alias gshow="git show"
 
 # useful general aliases
 
-alias pac="pacman"
-alias pacs="sudo pacman -S"
-alias pacup="sudo pacman -Syuu"
-alias yao="yaourt"
+alias pacss="pacaur -Ss"
+alias pacs="pacaur -S"
+alias pacsup="time pacaur -Syuua"
+alias pacup="time sudo pacman -Syuu"
 
-alias susp="systemctl suspend"
+alias susp="i3lock-fancy -- scrot -q 1 && systemctl suspend"
 
-alias vimrc="vim $HOME/.vimrc"
-alias zshrc="vim $HOME/.zshrc"
+alias vimrc="$EDITOR $HOME/.vimrc"
+alias nvimrc="$EDITOR $HOME/.config/nvim/init.vim"
+alias zshrc="$EDITOR $HOME/.zshrc"
+alias i3conf="$EDITOR $HOME/.config/i3/config"
 
-alias mv="idiot_mv"
+# useful specific aliases
+
+alias arduino-ide="sudo /usr/share/arduino/arduino"
 
 # stop hitting the goddamn ñ key
 
-alias lñ="echo 'LEÑE!'"
-
-# exotic stuff
-
-alias stopeclim="$ECLIPSE_HOME/eclim -command shutdown"
+alias lñ="/usr/local/bin/lenye && sleep 1 && ll"
+alias ñ="lñ"
+alias ññ="lñ"
 
 # danger zone
 
-alias yolo="yaourt -Syyuua --noconfirm --devel"
+alias polo="pacaur -Syyuua --noconfirm --devel"
 
 

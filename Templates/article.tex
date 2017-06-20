@@ -1,0 +1,103 @@
+\documentclass[spanish]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+
+\usepackage{hyperref}
+
+\usepackage{color}
+
+\usepackage[margin=0.8in]{geometry}
+
+\usepackage{float}
+
+\usepackage{dirtytalk}
+
+\usepackage{amsmath}
+
+\usepackage{graphicx}
+
+%\usepackage{fontspec}
+
+%%
+
+\graphicspath{ {images/} }
+
+\inputencoding{utf8}
+\hypersetup{
+  pdfborder={0 0 0},
+  linkcolor=blue
+}
+\newcommand{\colorhref}[3] {
+  \color{#1}{\href{#2}{#3 }}\color{black}
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \begin{figure}
+    \centering
+    \def\svgwidth{0.20\columnwidth}
+    \input{images/ULPGC.pdf_tex}
+  \end{figure}
+  {\scshape\Large Organization\par}
+  \vspace{1cm}
+  {\scshape\large Department\par}
+  \vspace{2.5cm}
+  {\huge\bfseries Document Title\par}
+  \vspace{1.5cm}
+  {\Large\itshape por Diego Sáinz de Medrano\par}
+
+  \vfill
+
+  % Bottom of the page
+  {\large \today\par}
+\end{titlepage}
+
+  \newpage
+  \pagenumbering{arabic}
+
+  % Basic formatting
+  \textit{some italics}, \textbf{some bold} and \underline{some underline}.
+  Also, \texttt{some monospace}.
+
+  % Subsections
+  \section{Section}
+ 	\subsection{Subsection}
+
+  % Images
+  \begin{figure}[H]
+    \centering
+    u mad tho lol rly ya
+    %\includegraphics[width=\textwidth]{imagetitle}
+    %\caption{Image caption.}
+  \end{figure}
+
+  % Side by side figures
+  \begin{figure}[H]
+    \centering
+    \begin{minipage}{.5\textwidth}
+      \centering
+      %\includegraphics[width=\linewidth]{imagetitle}
+      %\caption{Image caption.}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+      \centering
+      %\includegraphics[width=\linewidth]{imagetitle}
+      %\caption{Image caption.}
+    \end{minipage}
+  \end{figure}
+
+  \section{Ficheros entregados}
+  \begin{itemize}
+    \item{}
+  \end{itemize}
+
+  \vfill
+  \section{Bibliografía}
+  \begin{itemize}
+    \item{\colorhref{blue}{url}{alias}}
+  \end{itemize}
+
+\end{document}

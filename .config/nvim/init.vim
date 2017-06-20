@@ -1,4 +1,4 @@
-" Vim config file.
+" NeoVim init file based on .vimrc example.
 " Modified by Tormenta <diego.sainzdemedrano@gmail.com>
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
@@ -131,6 +131,12 @@ call plug#begin()
     " File tree
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
+    " Dark powered neo-completion
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+    " Code linting
+    Plug 'neomake/neomake', { 'for': ['cpp', 'c', 'java', 'javascript', 'arduino'] }
+
     " Bracket/quotation autoclose
     Plug 'jiangmiao/auto-pairs'
 
@@ -143,6 +149,10 @@ call plug#begin()
     " Highlight cursor containing tag
     Plug 'Valloric/MatchTagAlways', { 'for': 'html' }
 
+    " LaTex live preview
+    "Plug 'donRaphaco/neotex', { 'for': 'tex' }
+    "Plug 'lervag/vimtex', { 'for': 'tex' }
+    "Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
     " Autocolor hex/rgba codes
     Plug 'lilydjwg/colorizer'
@@ -164,6 +174,39 @@ call plug#begin()
     set laststatus=2
     let g:airline_powerline_fonts = 1
 
+    " Activate neomake.
+    "autocmd! BufWritePost * Neomake
+    let g:neomake_cpp_gxx_maker = {
+       \ 'exe': 'g++',
+       \ 'args': ['-Wall', '-Iinclude']
+       \ }
+
+    let g:neomake_go_gobuild_maker = {
+       \ 'exe': 'go build',
+       \ 'buffer_output': 1
+       \ }
+
+    let g:neomake_cpp_enabled_makers = [ 'gxx' ]
+    let g:neomake_javascript_enabled_makers = [ 'eslint' ]
+    let g:neomake_go_enabled_makers = [ 'gobuild' ]
+
+    augroup neomake_neomake_build
+        "autocmd! BufRead,BufWritePost *.go Neomake gobuild
+        autocmd! BufWritePost *.cpp Neomake gxx
+        "autocmd! BufWritePost *.js Neomake eslint
+    augroup end
+
+    map <Leader><Space>e :lopen<CR>
+    map <Leader><Space>c :lclose<CR>
+    map <Leader><Space>n :lnext<CR>
+    map <Leader><Space>p :lprev<CR>
+    map <Leader><Space><Space> :ll<CR>
+
+    " Use deoplete.
+    let g:deoplete#enable_at_startup = 1
+
+    "let g:livepreview_previewer = 'zathura'
+
 call plug#end()
 
 set ls=2
@@ -183,4 +226,3 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 cnoreabbrev Qa qa
-
