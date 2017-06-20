@@ -1,3 +1,5 @@
+# Xdefaults config file (for stjerm) by Tormenta74
+
 stjerm.key: f12
 stjerm.opacity: 85
 stjerm.border: thin
