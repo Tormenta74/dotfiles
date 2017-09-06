@@ -1,0 +1,10 @@
+#!/usr/bin/9menu -file
+-popup
+-geometry 20x20
+  9menu   :true
+   ---    :true
+ suspend  :i3lock && systemctl suspend
+ poweroff :poweroff
+  reboot  :reboot
+   ---    :true
+  cancel  :true

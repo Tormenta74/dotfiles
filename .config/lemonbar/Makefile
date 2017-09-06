@@ -1,0 +1,5 @@
+
+all: .cal
+
+.cal:
+	@cal > $@

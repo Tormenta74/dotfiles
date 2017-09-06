@@ -41,7 +41,7 @@ syntax on
 set hlsearch
 
 set bg=dark
-colorscheme desert
+colorscheme elflord
 
 set number
 set mouse=a
@@ -160,6 +160,7 @@ call plug#begin()
     " Dem arrows in da bar
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'morhetz/gruvbox'
 
 
     ""
@@ -172,7 +173,9 @@ call plug#begin()
     let g:user_emmet_mode='a'   " Set tag completion for all modes
 
     set laststatus=2
-    let g:airline_powerline_fonts = 1
+    let g:airline_powerline_fonts = 0
+    let g:airline_powerline_left_sep = ''
+    let g:airline_powerline_right_sep = ''
 
     " Activate neomake.
     "autocmd! BufWritePost * Neomake
@@ -206,6 +209,8 @@ call plug#begin()
     let g:deoplete#enable_at_startup = 1
 
     "let g:livepreview_previewer = 'zathura'
+
+    colorscheme gruvbox
 
 call plug#end()
 
