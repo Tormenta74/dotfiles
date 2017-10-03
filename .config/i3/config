@@ -18,14 +18,8 @@ floating_modifier $mod
 # kill focused window
 bindsym $mod+Shift+q kill
 
-set $bg-color 	         #2f343f
-set $inactive-bg-color   #2f343f
-set $text-color          #f3f4f5
-set $inactive-text-color #676E7D
-set $urgent-bg-color #E53935
-
 # start rofi
-bindsym $mod+d exec rofi -show run -lines 15 -width 100 -opacity "85" #-bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" 
+bindsym $mod+d exec rofi -show run -lines 15 -width 100 -padding 200 #-opacity "85"
 
 # start a terminal
 bindsym $mod+Return exec termite
@@ -83,32 +77,45 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+Shift+d focus child
 
+## Workspaces
+
+set $ws1 1: comm
+set $ws2 2: conf
+set $ws3 3: browse
+set $ws4 4: xlsx
+set $ws5 5: org
+set $ws6 6: prog
+set $ws7 7: wild
+set $ws8 8: vm
+set $ws9 9: media
+set $ws10 10: speed
+
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
 bindsym Ctrl+$mod+Left workspace prev
 bindsym Ctrl+$mod+Right workspace next
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
 
 
 # reload the configuration file
@@ -118,7 +125,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-gaps outer 1
+gaps outer 0
 gaps inner 8
 
 # resize window (you can also use the mouse for that)
@@ -140,12 +147,25 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+mode "borders" {
+        bindsym Right gaps inner all plus 2
+        bindsym Left gaps inner all minus 2
+
+        bindsym Shift+0 gaps inner all set 0
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+g mode "borders"
+
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Sreen brightness controls
+# brokkken atm
 #bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 #bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
@@ -153,13 +173,41 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 bindsym Print exec bash $HOME/.scripts/screenshot.sh
 bindsym Shift+Print exec bash $HOME/.scripts/screenshot-full.sh
 
+# Screencasting
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
         status_command i3status
 }
 
+## Useful window manipulations
+
+# Floaters
 for_window [title="Volume Control"] floating enable
 
-exec_always compton -f -c
-exec_always $HOME/.fehbg
+# Workspace specifics
+
+assign [window_role="browser"] $ws3
+assign [class="Firefox"] $ws3
+assign [class="Chromium"] $ws3
+
+assign [class="TelegramDesktop"] $ws1
+
+## Colors
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #ad1a20 #ad1a20 #ffffff #00ff00   #ad0000
+client.focused_inactive #fb4934 #fb4934 #ffffff #00ff00   #fb0000
+client.unfocused        #750000 #750000 #888888 #00ff00   #550000
+client.urgent           #fabd2f #fabd2f #ffffff #00ff00   #d79921
+
+## Autostart
+
+# Important
+exec_always lxsession
+exec_always --no-startup-id compton -f -c -m 0.85
+exec_always --no-startup-id $HOME/.fehbg
+
+# Applications
+exec_always --no-startup-id telegram-desktop
