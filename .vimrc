@@ -1,4 +1,4 @@
-" Vim config file.
+" NeoVim init file based on .vimrc example.
 " Modified by Tormenta <diego.sainzdemedrano@gmail.com>
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
@@ -41,7 +41,7 @@ syntax on
 set hlsearch
 
 set bg=dark
-colorscheme desert
+colorscheme elflord
 
 set number
 set mouse=a
@@ -107,8 +107,8 @@ map Qq gg=G''<CR>
 
 
 " For latex compilation
-nnoremap <Leader>lc :!pdflatex %<CR>
-nnoremap <Leader>xc :!xelatex %<CR>
+nnoremap <Leader>lc :w<CR>:!pdflatex %<CR>
+nnoremap <Leader>xc :w<CR>:!xelatex %<CR>
 
 
 " Create tag fold
@@ -131,6 +131,9 @@ call plug#begin()
     " File tree
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
+    " Code linting
+    Plug 'neomake/neomake', { 'for': ['cpp', 'c', 'go', 'java', 'javascript', 'arduino'] }
+
     " Bracket/quotation autoclose
     Plug 'jiangmiao/auto-pairs'
 
@@ -143,13 +146,13 @@ call plug#begin()
     " Highlight cursor containing tag
     Plug 'Valloric/MatchTagAlways', { 'for': 'html' }
 
-
     " Autocolor hex/rgba codes
     Plug 'lilydjwg/colorizer'
 
     " Dem arrows in da bar
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'morhetz/gruvbox'
 
 
     ""
@@ -162,7 +165,29 @@ call plug#begin()
     let g:user_emmet_mode='a'   " Set tag completion for all modes
 
     set laststatus=2
-    let g:airline_powerline_fonts = 1
+    let g:airline_powerline_fonts = 0
+    let g:airline_powerline_left_sep = ''
+    let g:airline_powerline_right_sep = ''
+
+    let g:neomake_cpp_gxx_maker = {
+       \ 'exe': 'g++',
+       \ 'args': ['-Wall', '-Iinclude']
+       \ }
+    let g:neomake_cpp_enabled_makers = [ 'gxx' ]
+    autocmd! BufWritePost *.cpp Neomake gxx
+
+    map <Leader><Space>e :lopen<CR>
+    map <Leader><Space>c :lclose<CR>
+    map <Leader><Space>n :lnext<CR>
+    map <Leader><Space>p :lprev<CR>
+    map <Leader><Space><Space> :ll<CR>
+
+    " Use deoplete.
+    let g:deoplete#enable_at_startup = 1
+
+    "let g:livepreview_previewer = 'zathura'
+
+    colorscheme gruvbox
 
 call plug#end()
 
@@ -183,4 +208,3 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 cnoreabbrev Qa qa
-
