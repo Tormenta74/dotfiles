@@ -121,15 +121,17 @@ alias gl="git log --decorate"
 alias glo="git log --oneline --decorate"
 alias graph="git log --oneline --decorate --graph"
 
+alias gig="$EDITOR .gitignore"
+alias grem="git remote"
+alias gtag="git tag"
+alias gshow="git show"
+
 # shady git commands
 
 alias gbr="git branch"
 alias gch="git checkout"
 alias gmg="git merge"
 alias grb="git rebase"
-alias grem="git remote"
-alias gtag="git tag"
-alias gshow="git show"
 alias garch="git archive --format=zip -v -o"
 
 # useful general aliases
@@ -152,7 +154,6 @@ alias vi="nvim"
 # useful specific aliases
 
 alias steamw="WINEDEBUG=-all wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Steam/Steam.exe >/dev/null 2>&1 &"
-alias whatsapp="/opt/WhatsApp/whats-app-web-linux-x64/whats-app-web >/dev/null 2>&1 &"
 alias keep="/opt/Keep/sign-in-google-accounts >/dev/null 2>&1 &"
 alias mkdirtoday="mkdir $(date +%Y_%m_%d_%H%M)"
 
