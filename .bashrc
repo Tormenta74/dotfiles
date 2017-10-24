@@ -43,4 +43,4 @@ alias gshow="git show"
 alias garch="git archive --format=zip -v -o"
 
 alias vi="vim"
-alias mkdirtoday="mkdir $(date +%Y_%m_%d_%H%M)"
+alias mkdirtoday="mkdir $(date +%Y_%m_%d)"
