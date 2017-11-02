@@ -42,5 +42,8 @@ alias gtag="git tag"
 alias gshow="git show"
 alias garch="git archive --format=zip -v -o"
 
+# useful lab commands
+
+alias psql="psql -U alumnodb si1"
 alias vi="vim"
 alias mkdirtoday="mkdir $(date +%Y_%m_%d)"
