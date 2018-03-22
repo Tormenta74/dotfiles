@@ -1,9 +1,6 @@
 " NeoVim init file based on .vimrc example.
 " Modified by Tormenta <diego.sainzdemedrano@gmail.com>
 "
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2015 Mar 24
-"
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
 "	      for Amiga:  s:.vimrc
@@ -97,22 +94,20 @@ let mapleader=","
 " Different indentation settings
 map <Leader>t :set expandtab tabstop=4 shiftwidth=4<CR>
 map <Leader>T :set noexpandtab tabstop=8 shiftwidth=8<CR>
-map <Leader><Leader> :set expandtab tabstop=2 shiftwidth=2<CR>
-map <Leader>r :retab<CR>
 
 
 " Formatting (doesn't work inmmediately)
 map Q V=<CR><Esc>
 map Qq gg=G''<CR>
 
+" Formatting C code
+nnoremap <Leader>f :%!astyle<CR>
 
 " For latex compilation
-nnoremap <Leader>lc :!pdflatex %<CR>
-nnoremap <Leader>xc :!xelatex %<CR>
-
-
-" Create tag fold
-nnoremap <Leader>f zfat
+nnoremap <Leader>lc :w<CR>:!pdflatex %<CR>
+nnoremap <Leader>xc :w<CR>:!xelatex %<CR>
+nnoremap <Leader>lc<CR> :w<CR>:!pdflatex %<CR><CR>
+nnoremap <Leader>xc<CR> :w<CR>:!xelatex %<CR><CR>
 
 
 " Easy toggle highlight search
@@ -126,41 +121,37 @@ nnoremap <C-p> gt
 " Trailing whitespace
 nnoremap <Leader>rt :%s/\s\+$//e<CR>
 
-call plug#begin()
 
-    " File tree
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+call plug#begin()
 
     " Dark powered neo-completion
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-    " Code linting
-    Plug 'neomake/neomake', { 'for': ['cpp', 'c', 'java', 'javascript', 'arduino'] }
-
-    " Bracket/quotation autoclose
-    Plug 'jiangmiao/auto-pairs'
-
-    " Sweet tag completion
-    Plug 'mattn/emmet-vim', { 'for': ['html', 'xml', 'eruby', 'markdown'] }
-
-    " SCSS syntax highlight
-    Plug 'cakebaker/scss-syntax.vim'
-
     " Highlight cursor containing tag
     Plug 'Valloric/MatchTagAlways', { 'for': 'html' }
-
-    " LaTex live preview
-    "Plug 'donRaphaco/neotex', { 'for': 'tex' }
-    "Plug 'lervag/vimtex', { 'for': 'tex' }
-    "Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-
+    " SCSS syntax highlight
+    Plug 'cakebaker/scss-syntax.vim'
+    " Fucking correct PHP indentation
+    Plug 'captbaritone/better-indent-support-for-php-with-html', { 'for': 'php' }
+    " Go tools in the editor
+    Plug 'fatih/vim-go', { 'for': 'go' }
+    Plug 'zchee/deoplete-go', { 'do': 'make' }
+    " Bracket/quotation autoclose
+    Plug 'jiangmiao/auto-pairs'
     " Autocolor hex/rgba codes
     Plug 'lilydjwg/colorizer'
-
+    " Sweet tag completion
+    Plug 'mattn/emmet-vim', { 'for': ['html', 'php', 'xml', 'eruby', 'markdown'] }
+    " Nice
+    Plug 'morhetz/gruvbox'
+    " Dark powered neo-code linting
+    Plug 'neomake/neomake', { 'for': ['cpp', 'c', 'go', 'java', 'javascript', 'arduino'] }
+    " File tree
+    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     " Dem arrows in da bar
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'morhetz/gruvbox'
+    " C support
+    Plug 'vim-jp/vim-cpp', { 'for': 'c' }
 
 
     ""
@@ -177,27 +168,26 @@ call plug#begin()
     let g:airline_powerline_left_sep = ''
     let g:airline_powerline_right_sep = ''
 
-    " Activate neomake.
-    "autocmd! BufWritePost * Neomake
+    " goimports on write
+    let g:go_fmt_command = "goimports"
+    au FileType go nmap <leader>gr <Plug>(go-run-vertical)
+    autocmd! BufWritePost *.go Neomake
+
+    " g++ check on write
     let g:neomake_cpp_gxx_maker = {
        \ 'exe': 'g++',
        \ 'args': ['-Wall', '-Iinclude']
        \ }
-
-    let g:neomake_go_gobuild_maker = {
-       \ 'exe': 'go build',
-       \ 'buffer_output': 1
-       \ }
-
     let g:neomake_cpp_enabled_makers = [ 'gxx' ]
-    let g:neomake_javascript_enabled_makers = [ 'eslint' ]
-    let g:neomake_go_enabled_makers = [ 'gobuild' ]
+    autocmd! BufWritePost *.cpp Neomake gxx
 
-    augroup neomake_neomake_build
-        "autocmd! BufRead,BufWritePost *.go Neomake gobuild
-        autocmd! BufWritePost *.cpp Neomake gxx
-        "autocmd! BufWritePost *.js Neomake eslint
-    augroup end
+    " gcc check on write
+    let g:neomake_c_gcc_maker = {
+       \ 'exe': 'gcc',
+       \ 'args': ['-Wall', '-Iincludes']
+       \ }
+    let g:neomake_c_enabled_makers = [ 'gcc' ]
+    autocmd! BufWritePost *.c Neomake gcc
 
     map <Leader><Space>e :lopen<CR>
     map <Leader><Space>c :lclose<CR>
@@ -207,13 +197,17 @@ call plug#begin()
 
     " Use deoplete.
     let g:deoplete#enable_at_startup = 1
+    let g:deoplete#sources#go#gocode_binary = '$GOPATH/bin/gocode'
 
-    "let g:livepreview_previewer = 'zathura'
+    " close preview pane
+    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
+    " Just in case it works
     colorscheme gruvbox
 
 call plug#end()
 
+" Automatic statusline
 set ls=2
 let g:powerline_pycmd="py3"
 

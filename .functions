@@ -1,64 +1,6 @@
-##
-## my custom functions
-##
+#/* vim: set filetype=zsh : */
 
-# just checks a directory/file's size every 2 seconds
-# useful for monitoring big downloads or cp/mv operations
-
-monitor () {
-    if [[ $# == 0 ]]; then
-        watch -n 2 ls -lah
-    else 
-        watch -n 2 ls -lah $1
-    fi
-}
-
-# makes dated archives of directories passed as arguments
-
-backup () {
-    fecha=$(date +%Y-%m-%d-%H%M%S)
-    if [[ $# == 0 ]]; then
-        echo 'usage: backup directory1 [directory2 directory3 ...]'
-        return 1
-    else 
-        for i;
-        do [[ -a $i ]] && tar zcfv $i.$fecha.tar.gz $i;
-        done
-    fi
-}
-
-# related to backup: move selected files (only files) to the archive folder
-
-#TODO: 
-store () {
-}
-
-# useful for java developement
-# run in the project root to try to add a pom
-
-mavenize () {
-    if [[ -f $HOME/Templates/pom.xml ]]; then
-        cp $HOME/Templates/pom.xml .
-    else
-        echo -e "No POM template found at $HOME/Templates"
-        return 1
-    fi
-}
-
-# restarts a given program and detaches from the shell (I used it a lot with Plank)
-
-restart () {
-    if [[ $# == 0 ]]; then
-        echo -e "No program name given"
-    else
-        pkill $1
-        nohup $1 > /dev/null &
-    fi
-}
-
-# greps the process table for what you want
-
-isrunning () {
+isrunning() {
     if [[ $# == 0 ]]; then
         echo -e "No program name given"
     else

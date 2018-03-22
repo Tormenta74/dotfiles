@@ -2,7 +2,7 @@
 
 export TERM="xterm-256color"
 
-# THEME 
+# THEME
 
 # Generated prompt (by promptline.vim)
 #source $HOME/zsh/zsh-airline-prompt/prompt.sh
@@ -10,24 +10,11 @@ export TERM="xterm-256color"
 # 9k
 POWERLEVEL9K_MODE="awesome-fontconfig"
 
-arch_icon() {
-    echo -e "\uef7d "
-}
-
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator custom_arch_icon user dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs ssh anaconda go_version host time)
-
-POWERLEVEL9K_CUSTOM_ARCH_ICON=arch_icon
-POWERLEVEL9K_PYTHON_ICON="\uefe3"
-POWERLEVEL9K_ANACONDA_BACKGROUND="033"
-POWERLEVEL9K_ANACONDA_FOREGROUND="231"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator user dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs ssh virtualenv go_version host time)
 
 POWERLEVEL9K_GO_VERSION_BACKGROUND="118"
 POWERLEVEL9K_GO_VERSION_FOREGROUND="231"
-
-POWERLEVEL9K_DIR_SHOW_WRITABLE=false
-POWERLEVEL9K_NOT_WRITABLE_ICON=""
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
 POWERLEVEL9K_HOME_ICON=''
 POWERLEVEL9K_HOME_SUB_ICON=''
@@ -47,6 +34,8 @@ POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='214'
 POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='236'
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='196'
 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='236'
+
+POWERLEVEL9K_BACKGROUND_JOBS_ICON=''
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
@@ -85,6 +74,7 @@ SAVEHIST=10000
 
 # bindkeys for my weird terminals
 
+bindkey -e
 bindkey '^[[1;5C' forward-word      # [Ctrl-RightArrow] - move forward one word
 bindkey '^[[1;5D' backward-word     # [Ctrl-LeftArrow] - move backward one word
 bindkey '^[OH' beginning-of-line
@@ -93,9 +83,12 @@ bindkey '^[OF' end-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[[Z' reverse-menu-complete
+#bindkey '^[.' copy-prev-shell-word
 
 source $HOME/.env
 source $HOME/.functions
+
+#source <(gopass completion zsh)
 
 # classic fancy aliases
 
@@ -122,6 +115,7 @@ alias glo="git log --oneline --decorate"
 alias graph="git log --oneline --decorate --graph"
 
 alias gig="$EDITOR .gitignore"
+alias gdiff="git diff"
 alias grem="git remote"
 alias gtag="git tag"
 alias gshow="git show"
@@ -136,9 +130,12 @@ alias garch="git archive --format=zip -v -o"
 
 # useful general aliases
 
-alias pacss="pacaur -Ss"
-alias pacs="time pacaur -S"
-alias pacup="time pacaur -Syuua"
+alias sudo="sudo "
+alias pac="time trizen"
+alias pacup="time yay -Syuu"
+#alias pac="time yay"
+#alias pacs="time pacaur -S"
+#alias pacsoup="time pacaur -Syuua"
 
 # lock is i3lock-fancy from meskarune (github)
 alias suspend="i3lock-fancy -- maim -m 5 -f jpg -u && systemctl suspend"
@@ -148,26 +145,21 @@ alias nvimrc="$EDITOR $HOME/.config/nvim/init.vim"
 alias zshrc="$EDITOR $HOME/.zshrc"
 alias i3conf="$EDITOR $HOME/.config/i3/config"
 
-alias vim="nvim"
-alias vi="nvim"
+#alias vim="nvim"
+alias vi="vim"
 
 # useful specific aliases
 
-alias steamw="WINEDEBUG=-all wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Steam/Steam.exe >/dev/null 2>&1 &"
-alias keep="/opt/Keep/sign-in-google-accounts >/dev/null 2>&1 &"
-alias mkdirtoday="mkdir $(date +%Y_%m_%d_%H%M)"
+alias mkdirtoday="mkdir $(date +%Y_%m_%d)"
+alias pdb="python -m pdb"
+alias teams="google-chrome-stable -app="https://teams.microsoft.com/""
 
 # stop hitting the goddamn ñ key
 
-#alias lñ="/usr/local/bin/lenye && sleep 1 && ll"
+#alias lñ="lenye && sleep 1 && ll"
 #alias ñ="lñ"
 #alias ññ="lñ"
 
-# some shit
+# mistyping is over
 
-alias vtop="vtop -t wizard" # note that vtop is cool, but quite a shitty tool
-
-# danger zone
-
-alias polo="time pacaur -Syyuua --noconfirm --devel"
-
+alias sl="sl -aFc"
